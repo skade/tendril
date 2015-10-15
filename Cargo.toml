@@ -19,3 +19,7 @@ rand = "0"
 
 [features]
 unstable = []
+
+[[test]]
+name = "benchmark_correctness"
+path = "benches/bench.rs"

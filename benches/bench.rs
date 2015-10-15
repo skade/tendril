@@ -4,6 +4,11 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
+#![feature(test, str_char)]
+
+extern crate tendril;
+extern crate test;
+
 use std::collections::hash_map::{HashMap, Entry};
 use std::borrow::ToOwned;
 
@@ -85,10 +90,10 @@ mod index_words {
                 fn index_words_string(b: &mut ::test::Bencher) {
                     let mut s = String::new();
                     while s.len() < SMALL_SIZE {
-                        s.push_str(::tendril::bench::$txt);
+                        s.push_str(::$txt);
                     }
                     b.iter(|| {
-                        ::tendril::bench::index_words_string(&s)
+                        ::index_words_string(&s)
                     });
                 }
 
@@ -96,10 +101,10 @@ mod index_words {
                 fn index_words_tendril(b: &mut ::test::Bencher) {
                     let mut t = ::tendril::StrTendril::new();
                     while t.len() < SMALL_SIZE {
-                        t.push_slice(::tendril::bench::$txt);
+                        t.push_slice(::$txt);
                     }
                     b.iter(|| {
-                        ::tendril::bench::index_words_tendril(&t)
+                        ::index_words_tendril(&t)
                     });
                 }
 
@@ -107,10 +112,10 @@ mod index_words {
                 fn index_words_big_string(b: &mut ::test::Bencher) {
                     let mut s = String::new();
                     while s.len() < LARGE_SIZE {
-                        s.push_str(::tendril::bench::$txt);
+                        s.push_str(::$txt);
                     }
                     b.iter(|| {
-                        ::tendril::bench::index_words_string(&s)
+                        ::index_words_string(&s)
                     });
                 }
 
@@ -118,10 +123,10 @@ mod index_words {
                 fn index_words_big_tendril(b: &mut ::test::Bencher) {
                     let mut t = ::tendril::StrTendril::new();
                     while t.len() < LARGE_SIZE {
-                        t.push_slice(::tendril::bench::$txt);
+                        t.push_slice(::$txt);
                     }
                     b.iter(|| {
-                        ::tendril::bench::index_words_tendril(&t)
+                        ::index_words_tendril(&t)
                     });
                 }
 
@@ -129,16 +134,15 @@ mod index_words {
                 fn correctness() {
                     use std::borrow::ToOwned;
                     use tendril::SliceExt;
-                    use tendril::bench::{index_words_string, index_words_tendril};
 
-                    let txt = ::tendril::bench::$txt;
+                    let txt = ::$txt;
                     let input_string = txt.to_owned();
-                    let count_s = index_words_string(&input_string);
+                    let count_s = ::index_words_string(&input_string);
                     let mut keys: Vec<char> = count_s.keys().cloned().collect();
                     keys.sort();
 
                     let input_tendril = txt.to_tendril();
-                    let count_t = index_words_tendril(&input_tendril);
+                    let count_t = ::index_words_tendril(&input_tendril);
                     let mut keys_t: Vec<char> = count_t.keys().cloned().collect();
                     keys_t.sort();
 

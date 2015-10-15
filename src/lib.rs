@@ -5,16 +5,11 @@
 // except according to those terms.
 
 #![cfg_attr(feature = "unstable", feature(core, nonzero, unsafe_no_drop_flag, filling_drop))]
-#![cfg_attr(all(test, feature = "unstable"), feature(test, str_char))]
 #![cfg_attr(test, deny(warnings))]
 
-#[cfg(feature = "unstable")] extern crate core;
 #[macro_use] extern crate mac;
 extern crate futf;
 extern crate encoding;
-
-#[cfg(all(test, feature = "unstable"))]
-extern crate test;
 
 pub use tendril::{Tendril, ByteTendril, StrTendril, SliceExt, ReadExt, SubtendrilError};
 pub use tendril::{SendTendril, Atomicity, Atomic, NonAtomic};

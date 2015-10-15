@@ -1530,11 +1530,6 @@ impl<'a, A> From<&'a Tendril<fmt::UTF8, A>> for String
     }
 }
 
-
-#[cfg(all(test, feature = "unstable"))]
-#[path="bench.rs"]
-mod bench;
-
 #[cfg(test)]
 mod test {
     use super::{Tendril, ByteTendril, StrTendril, SendTendril,
